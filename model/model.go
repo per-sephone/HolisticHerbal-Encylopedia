@@ -10,25 +10,24 @@ import (
 const DB_FILE = "entries.db"
 
 type Model struct {
-	model *sql.DB
+	connection *sql.DB
 }
 
 type IModel interface {
-	GetModel() *Model
-	NewEntry(name string, dosage int, uses string, precautions string, preparations string) int64
-	GetEntryByName(name string) *Herb
-	GetAllEntries() []Herb
+	Insert(name string, dosage int, uses string, precautions string, preparations string) int64
+	SelectByName(name string) *Herb
+	Select() []Herb
 }
 
-func New(model *sql.DB) *Model {
-
+func New() *Model {
 	db, err := sql.Open("sqlite3", DB_FILE)
 	if err != nil {
+		log.Fatal(err)
 		return nil
 	}
 
 	// possibly change uses, precautions, and preparations to JSON
-	_, err = model.Exec(`
+	_, err = db.Exec(`
 	CREATE TABLE IF NOT EXISTS herbs (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		name TEXT,
@@ -38,23 +37,18 @@ func New(model *sql.DB) *Model {
 		preparations TEXT
 		)
 	`)
-
 	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
 
 	return &Model{
-		model: db,
+		connection: db,
 	}
 }
 
-func (m *Model) GetModel() (*Model) {
-	return m
-}
-
-func (m *Model) NewEntry(name string, dosage int, uses string, precautions string, preparations string) int64 {
-	result, err := m.model.Exec("INSERT INTO herbs (name, dosage, uses, precautions, preparations) VALUES (?, ?, ?, ?, ?)", name, dosage, uses, precautions, preparations)
+func (m *Model) Insert(name string, dosage int, uses string, precautions string, preparations string) int64 {
+	result, err := m.connection.Exec("INSERT INTO herbs (name, dosage, uses, precautions, preparations) VALUES (?, ?, ?, ?, ?)", name, dosage, uses, precautions, preparations)
 	if err != nil {
 		log.Println("Error creating new entry:", err)
 		return 0
@@ -67,8 +61,8 @@ func (m *Model) NewEntry(name string, dosage int, uses string, precautions strin
 	return id
 }
 
-func (m *Model) GetEntryByName(name string) (*Herb) {
-	row := m.model.QueryRow("SELECT * FROM herbs WHERE name = ?", name)
+func (m *Model) SelectByName(name string) (*Herb) {
+	row := m.connection.QueryRow("SELECT * FROM herbs WHERE name = ?", name)
 	var herb Herb
 	err := row.Scan(&herb.Name, &herb.Dosage, &herb.Uses, &herb.Precautions, &herb.Preparations)
 	if err != nil {
@@ -78,8 +72,8 @@ func (m *Model) GetEntryByName(name string) (*Herb) {
 	return &herb
 }
 
-func (m *Model) GetAllEntries() ([]Herb) {
-	rows, err := m.model.Query("SELECT * from herbs")
+func (m *Model) Select() ([]Herb) {
+	rows, err := m.connection.Query("SELECT * from herbs")
 	if err != nil {
 		log.Println("Error retrieving entries:", err)
 		return nil

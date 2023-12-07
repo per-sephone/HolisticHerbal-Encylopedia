@@ -13,12 +13,30 @@ type IModel struct {
 	mock.Mock
 }
 
-// GetAllEntries provides a mock function with given fields:
-func (_m *IModel) GetAllEntries() []model.Herb {
+// Insert provides a mock function with given fields: name, dosage, uses, precautions, preparations
+func (_m *IModel) Insert(name string, dosage int, uses string, precautions string, preparations string) int64 {
+	ret := _m.Called(name, dosage, uses, precautions, preparations)
+
+	if len(ret) == 0 {
+		panic("no return value specified for Insert")
+	}
+
+	var r0 int64
+	if rf, ok := ret.Get(0).(func(string, int, string, string, string) int64); ok {
+		r0 = rf(name, dosage, uses, precautions, preparations)
+	} else {
+		r0 = ret.Get(0).(int64)
+	}
+
+	return r0
+}
+
+// Select provides a mock function with given fields:
+func (_m *IModel) Select() []model.Herb {
 	ret := _m.Called()
 
 	if len(ret) == 0 {
-		panic("no return value specified for GetAllEntries")
+		panic("no return value specified for Select")
 	}
 
 	var r0 []model.Herb
@@ -33,12 +51,12 @@ func (_m *IModel) GetAllEntries() []model.Herb {
 	return r0
 }
 
-// GetEntryByName provides a mock function with given fields: name
-func (_m *IModel) GetEntryByName(name string) *model.Herb {
+// SelectByName provides a mock function with given fields: name
+func (_m *IModel) SelectByName(name string) *model.Herb {
 	ret := _m.Called(name)
 
 	if len(ret) == 0 {
-		panic("no return value specified for GetEntryByName")
+		panic("no return value specified for SelectByName")
 	}
 
 	var r0 *model.Herb
@@ -48,44 +66,6 @@ func (_m *IModel) GetEntryByName(name string) *model.Herb {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*model.Herb)
 		}
-	}
-
-	return r0
-}
-
-// GetModel provides a mock function with given fields:
-func (_m *IModel) GetModel() *model.Model {
-	ret := _m.Called()
-
-	if len(ret) == 0 {
-		panic("no return value specified for GetModel")
-	}
-
-	var r0 *model.Model
-	if rf, ok := ret.Get(0).(func() *model.Model); ok {
-		r0 = rf()
-	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*model.Model)
-		}
-	}
-
-	return r0
-}
-
-// NewEntry provides a mock function with given fields: name, dosage, uses, precautions, preparations
-func (_m *IModel) NewEntry(name string, dosage int, uses string, precautions string, preparations string) int64 {
-	ret := _m.Called(name, dosage, uses, precautions, preparations)
-
-	if len(ret) == 0 {
-		panic("no return value specified for NewEntry")
-	}
-
-	var r0 int64
-	if rf, ok := ret.Get(0).(func(string, int, string, string, string) int64); ok {
-		r0 = rf(name, dosage, uses, precautions, preparations)
-	} else {
-		r0 = ret.Get(0).(int64)
 	}
 
 	return r0
