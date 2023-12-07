@@ -7,7 +7,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-const DB_FILE = "entries.db"
+const DB_FILE = "../entries.db"
 
 type Model struct {
 	connection *sql.DB
@@ -61,15 +61,15 @@ func (m *Model) Insert(name string, dosage int, uses string, precautions string,
 	return id
 }
 
-func (m *Model) SelectByName(name string) (*Herb) {
+func (m *Model) SelectByName(name string) (Herb) {
 	row := m.connection.QueryRow("SELECT * FROM herbs WHERE name = ?", name)
 	var herb Herb
-	err := row.Scan(&herb.Name, &herb.Dosage, &herb.Uses, &herb.Precautions, &herb.Preparations)
+	err := row.Scan(&herb.Id, &herb.Name, &herb.Dosage, &herb.Uses, &herb.Precautions, &herb.Preparations)
 	if err != nil {
-		log.Println("Error retrieving entry with the given name:", err)
-		return nil
+		log.Println("Entry does not exist in the database:", err)
+		return Herb{}
 	}
-	return &herb
+	return herb
 }
 
 func (m *Model) Select() ([]Herb) {
@@ -82,7 +82,7 @@ func (m *Model) Select() ([]Herb) {
 	var herbs []Herb
 	for rows.Next() {
 		var herb Herb
-		err := rows.Scan(&herb.Name, &herb.Dosage, &herb.Uses, &herb.Precautions, &herb.Preparations)
+		err := rows.Scan(&herb.Id, &herb.Name, &herb.Dosage, &herb.Uses, &herb.Precautions, &herb.Preparations)
 		if err != nil {
 			log.Panicln("Error scanning row:", err)
 			return nil
