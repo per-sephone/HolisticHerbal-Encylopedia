@@ -13,6 +13,13 @@ type Model struct {
 	model *sql.DB
 }
 
+type IModel interface {
+	GetModel() *Model
+	NewEntry(name string, dosage int, uses string, precautions string, preparations string) int64
+	GetEntryByName(name string) *Herb
+	GetAllEntries() []Herb
+}
+
 func New(model *sql.DB) *Model {
 
 	db, err := sql.Open("sqlite3", DB_FILE)
