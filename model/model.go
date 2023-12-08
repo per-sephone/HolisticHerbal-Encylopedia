@@ -15,8 +15,9 @@ type Model struct {
 
 type IModel interface {
 	Insert(name string, dosage int, uses string, precautions string, preparations string) int64
-	SelectByName(name string) *Herb
 	Select() []Herb
+	SelectByName(name string) Herb
+	SelectByUse(use string) []Herb
 }
 
 func New() *Model {
@@ -61,6 +62,26 @@ func (m *Model) Insert(name string, dosage int, uses string, precautions string,
 	return id
 }
 
+func (m *Model) Select() ([]Herb) {
+	rows, err := m.connection.Query("SELECT * from herbs")
+	if err != nil {
+		log.Println("Error retrieving entries:", err)
+		return nil
+	}
+	defer rows.Close()
+	var herbs []Herb
+	for rows.Next() {
+		var herb Herb
+		err := rows.Scan(&herb.Id, &herb.Name, &herb.Dosage, &herb.Uses, &herb.Precautions, &herb.Preparations)
+		if err != nil {
+			log.Panicln("Error scanning row:", err)
+			return nil
+		}
+		herbs = append(herbs, herb)
+	}
+	return herbs
+}
+
 func (m *Model) SelectByName(name string) (Herb) {
 	row := m.connection.QueryRow("SELECT * FROM herbs WHERE name = ?", name)
 	var herb Herb
@@ -72,13 +93,11 @@ func (m *Model) SelectByName(name string) (Herb) {
 	return herb
 }
 
-func (m *Model) Select() ([]Herb) {
-	rows, err := m.connection.Query("SELECT * from herbs")
+func (m *Model) SelectByUse(use string) ([]Herb) {
+	rows, err := m.connection.Query("SELECT * from herbs WHERE uses LIKE '%' || ? || '%'", use)
 	if err != nil {
-		log.Println("Error retrieving entries:", err)
-		return nil
+		log.Fatal(err)
 	}
-	defer rows.Close()
 	var herbs []Herb
 	for rows.Next() {
 		var herb Herb
