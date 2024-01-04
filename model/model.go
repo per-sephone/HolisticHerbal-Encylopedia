@@ -7,7 +7,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-const DB_FILE = "../entries.db"
+const DB_FILE = "entries.db"
 
 type Model struct {
 	connection *sql.DB

@@ -1,0 +1,31 @@
+{{ define "content" }}
+{{ template "header"}}
+
+<h2>Holistic Herbal Encyclopedia</h2>
+<form action="{{ .Create }}" method="post">
+    <p class="heading">Name: <input type="text" name="name"></p>
+    <p class="heading">Dosage: <input type="text" name="dosage"></p>
+    <p class="heading">Uses: <input type="text" name="uses"></p>
+    <p class="heading">Precautions: <input type="text" name="precautions"></p>
+    <p class="heading">Preparations: <input type="text" name="preparations"></p>
+    <p><input type="submit" value="Submit"></p>
+ </form>
+
+ <!--  
+<h2>Entries</h2>
+{{ range .Entries }}
+<form action="{{ .Edit }}" method="post"> 
+    <p class="entry">
+        [ {{ .ID }} ]
+        Name: {{ .Name }}<br>
+        Dosage: {{ .Dosage }}<br>
+        Uses: {{ .Uses }} <br>
+        Precautions: {{ .Precautions }}<br>
+        Preparations: {{ .Preparations }}<br>
+        <input type="submit" value="Edit"></input>
+    </p>
+{{ end }}
+ </form>
+ -->
+{{ template "footer" }}
+{{ end }}
