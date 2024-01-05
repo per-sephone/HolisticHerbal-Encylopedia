@@ -1,7 +1,7 @@
 package main
 
 import (
-	holistic "holistic-herbal-encyclopedia/internal"
+	"holistic-herbal-encyclopedia/internal"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,6 +9,6 @@ import (
 func main() {
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*")
-	router.GET("/", holistic.Index)
-	router.Run("localhost:8080")
+	router.GET("/", internal.Index)
+	router.Run(":8080")
 }
