@@ -8,5 +8,5 @@ import (
 
 func Index(c *gin.Context) {
     //entries := model.New().Select() 
-    c.HTML(http.StatusOK, "index.html", gin.H{})
+    c.HTML(http.StatusOK, "index.html", gin.H{"Create": "/create"})
 }

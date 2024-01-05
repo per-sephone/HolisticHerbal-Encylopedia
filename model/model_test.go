@@ -16,7 +16,7 @@ func TestNew(t *testing.T) {
 func TestInsert(t *testing.T) {
 	db := New()
 	name := "TestName"
-	dosage := 1
+	dosage := "1"
 	uses := "TestUses"
 	precautions := "TestPrecautions"
 	preparations := "TestPreparations"
@@ -26,7 +26,7 @@ func TestInsert(t *testing.T) {
 
 func TestSelect(t *testing.T) {
 	db := New()
-	expected := []Herb{{Id: 1, Name: "TestName", Dosage: 1, Uses: "TestUses", Precautions: "TestPrecautions", Preparations: "TestPreparations"}}
+	expected := []Herb{{Id: 1, Name: "TestName", Dosage: "1", Uses: "TestUses", Precautions: "TestPrecautions", Preparations: "TestPreparations"}}
 	herbs := db.Select()
 	assert.Equal(t, herbs, expected)
 }
@@ -36,7 +36,7 @@ func TestSelectByName(t *testing.T) {
 	herb := Herb{}
 	herb = db.SelectByName("TestName")
 	assert.Equal(t, herb.Name, "TestName")
-	assert.Equal(t, herb.Dosage, 1)
+	assert.Equal(t, herb.Dosage, "1")
 	assert.Equal(t, herb.Uses, "TestUses")
 	assert.Equal(t, herb.Precautions, "TestPrecautions")
 	assert.Equal(t, herb.Preparations, "TestPreparations")
@@ -45,7 +45,7 @@ func TestSelectByName(t *testing.T) {
 func TestSelectByUse(t *testing.T) {
 	db := New()
 	herbs := []Herb{}
-	expected := []Herb{{Id: 1, Name: "TestName", Dosage: 1, Uses: "TestUses", Precautions: "TestPrecautions", Preparations: "TestPreparations"}}
+	expected := []Herb{{Id: 1, Name: "TestName", Dosage: "1", Uses: "TestUses", Precautions: "TestPrecautions", Preparations: "TestPreparations"}}
 	herbs = db.SelectByUse("TestUses")
 	assert.Equal(t, herbs, expected)
 }

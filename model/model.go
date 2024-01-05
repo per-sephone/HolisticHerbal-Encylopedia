@@ -32,7 +32,7 @@ func New() *Model {
 	CREATE TABLE IF NOT EXISTS herbs (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		name TEXT,
-		dosage INT,
+		dosage TEXT,
 		uses TEXT,
 		precautions TEXT,
 		preparations TEXT
@@ -48,7 +48,7 @@ func New() *Model {
 	}
 }
 
-func (m *Model) Insert(name string, dosage int, uses string, precautions string, preparations string) int64 {
+func (m *Model) Insert(name string, dosage string, uses string, precautions string, preparations string) int64 {
 	result, err := m.connection.Exec("INSERT INTO herbs (name, dosage, uses, precautions, preparations) VALUES (?, ?, ?, ?, ?)", name, dosage, uses, precautions, preparations)
 	if err != nil {
 		log.Println("Error creating new entry:", err)
