@@ -7,8 +7,10 @@
 <body>
 <h2>Holistic Herbal Encyclopedia</h2>
 <form action="{{ .Create }}" method="post">
-    <p class="heading">Name: <input type="text" name="name"></p>
-    <p class="heading">Dosage: <input type="text" name="dosage"></p>
+    <p class="heading">Name <br>
+        <textarea rows=1 cols=30 name=name></textarea></p>
+    <p class="heading">Dosage <br>
+        <textarea rows=1 cols=30 name=name></textarea></p>
 
     <p class="heading">Uses (separate each use with ;) <br>
         <textarea rows=5 cols=30 name=uses></textarea></p>
@@ -20,12 +22,13 @@
     <p><input type="submit" value="Submit"></p>
  </form>
 
- <!--  
+
 <h2>Entries</h2>
-{{ range .Entries }}
+
 <form action="{{ .Edit }}" method="post"> 
+    {{ range .Entries }}
     <p class="entry">
-        [ {{ .ID }} ]
+        [ {{ .Id }} ]
         Name: {{ .Name }}<br>
         Dosage: {{ .Dosage }}<br>
         Uses: {{ .Uses }} <br>
@@ -33,9 +36,7 @@
         Preparations: {{ .Preparations }}<br>
         <input type="submit" value="Edit"></input>
     </p>
-{{ end }}
+    {{ end }}
  </form>
  </body>
 </html>
-
- -->

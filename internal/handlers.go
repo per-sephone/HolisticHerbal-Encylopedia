@@ -8,20 +8,16 @@ import (
 )
 
 func Index(c *gin.Context) {
-    //entries := model.New().Select() 
-    c.HTML(http.StatusOK, "index.html", gin.H{"Create": "/create"})
-}
-
-type NewHerb struct {
-	Name string `form:"name" binding:"required"`
-	Dosage string `form:"dosage" binding:"required"`
-	Uses string `form:"uses" binding:"required"`
-	Precautions string `form:"precautions" binding:"required"`
-	Preparations string `form:"preparations" binding:"required"`
+    entries := model.New().Select() 
+    c.HTML(http.StatusOK, "index.html", gin.H{
+		"Create": "/create",
+		"Edit": "/edit",
+		"Entries": entries,
+	})
 }
 
 func Create(c *gin.Context) {
-	var form NewHerb
+	var form model.Herb
 	if err := c.ShouldBind(&form); err != nil {
 		c.String(http.StatusBadRequest, "Bad Request")
 		return
