@@ -52,7 +52,7 @@ func SearchByName(c *gin.Context) {
 func SearchByUse(c *gin.Context) {
 	use := c.Query("use")
 	entries := model.New().SelectByUse(use) 
-    c.HTML(http.StatusOK, "nameSearch.html", gin.H{
+    c.HTML(http.StatusOK, "useSearch.html", gin.H{
 		"Index": "/",
 		"Entries": entries,
 	})
