@@ -11,6 +11,10 @@ func main() {
 	router.Static("static", "./static")
 	router.LoadHTMLGlob("templates/*")
 	router.GET("/", internal.Index)
-	router.POST("/create", internal.Create)
+	router.POST("/create", internal.PostCreate)
+	router.GET("/create", internal.GetCreate)
+	router.GET("/search", internal.Search)
+	router.GET("/nameSearch/:name", internal.SearchByName)
+	router.GET("/useSearch/:use", internal.SearchByUse)
 	router.Run(":8080")
 }

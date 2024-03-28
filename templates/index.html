@@ -6,22 +6,9 @@
 </head>
 <body>
 <h2>Holistic Herbal Encyclopedia</h2>
-<form action="{{ .Create }}" method="post">
-    <p class="heading">Name <br>
-        <textarea rows=1 cols=30 name=name></textarea></p>
-    <p class="heading">Dosage <br>
-        <textarea rows=1 cols=30 name=name></textarea></p>
 
-    <p class="heading">Uses (separate each use with ;) <br>
-        <textarea rows=5 cols=30 name=uses></textarea></p>
-    <p class="heading">Precautions (separate each precaution with ;) <br>
-        <textarea rows=5 cols=30 name=precautions></textarea></p>
-    <p class="heading">Preparations (separate each preparation with ;) <br>
-        <textarea rows=5 cols=30 name=preparations></textarea></p>    
-
-    <p><input type="submit" value="Submit"></p>
- </form>
-
+<a href="{{ .Search }}">Click here to search the Encyclopedia</a><br>
+<a href="{{ .Create }}">Click Here to create a New Entry</a>
 
 <h2>Entries</h2>
 
