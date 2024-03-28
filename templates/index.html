@@ -12,8 +12,8 @@
 
 <h2>Entries</h2>
 
-<form action="{{ .Edit }}" method="post"> 
-    {{ range .Entries }}
+{{ range .Entries }}
+<form action="edit?id={{ .Id }}" method="get"> 
     <p class="entry">
         [ {{ .Id }} ]
         Name: {{ .Name }}<br>
@@ -21,9 +21,10 @@
         Uses: {{ .Uses }} <br>
         Precautions: {{ .Precautions }}<br>
         Preparations: {{ .Preparations }}<br>
+        <input type="hidden" value="{{ .Id }}" name="id"></input>
         <input type="submit" value="Edit"></input>
     </p>
-    {{ end }}
  </form>
+ {{ end }}
  </body>
 </html>

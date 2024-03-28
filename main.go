@@ -16,5 +16,7 @@ func main() {
 	router.GET("/search", internal.Search)
 	router.GET("/nameSearch", internal.SearchByName)
 	router.GET("/useSearch", internal.SearchByUse)
-	router.Run(":8001")
+	router.GET("/edit", internal.GetEdit)
+	router.POST("/edit", internal.PostEdit)
+	router.Run(":8080")
 }

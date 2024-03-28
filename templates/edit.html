@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Holistic Herbal Encyclopedia</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles.css">
+</head>
+<body>
+<h2>Holistic Herbal Encyclopedia</h2>
+
+<h2>Edit this Entry</h2>
+
+<form> 
+    <p class="entry">
+        [ {{ .Id }} ]
+        Name: {{ .Name }}<br>
+        Dosage: {{ .Dosage }}<br>
+        Uses: {{ .Uses }} <br>
+        Precautions: {{ .Precautions }}<br>
+        Preparations: {{ .Preparations }}<br>
+    </p>
+ </form>
+
+ <h2>Please fill in all fields as this will overwrite the current information.</h2>
+
+
+ <form action="{{ .Edit }}" method="post">
+    <p class="heading">Name <br>
+        <textarea rows=1 cols=30 name=name></textarea></p>
+    <p class="heading">Dosage (in milligrams) <br>
+        <textarea rows=1 cols=30 name=dosage></textarea></p>
+
+    <p class="heading">Uses (separate each use with ;) <br>
+        <textarea rows=5 cols=30 name=uses></textarea></p>
+    <p class="heading">Precautions (separate each precaution with ;) <br>
+        <textarea rows=5 cols=30 name=precautions></textarea></p>
+    <p class="heading">Preparations (separate each preparation with ;) <br>
+        <textarea rows=5 cols=30 name=preparations></textarea></p>    
+    <input type="hidden" value="{{ .Id }}" name="id"></input>
+    <p><input type="submit" value="Submit"></p>
+
+ </body>
+</html>

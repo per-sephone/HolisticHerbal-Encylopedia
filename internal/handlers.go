@@ -3,7 +3,7 @@ package internal
 import (
 	"holistic-herbal-encyclopedia/model"
 	"net/http"
-
+    "strconv"
 	"github.com/gin-gonic/gin"
 )
 
@@ -58,6 +58,40 @@ func SearchByUse(c *gin.Context) {
 	})
 }
 
-func Edit(c *gin.Context) {
-	
+func GetEdit(c *gin.Context) {
+	num := c.Query("id")
+	id, err := strconv.ParseInt(num, 10, 64)
+    if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+            "error": "Invalid value provided",
+        })
+        return
+    }
+	entry := model.New().SelectById(id)
+	c.HTML(http.StatusOK, "edit.html", gin.H{
+		"Id": entry.Id,
+		"Name": entry.Name,
+		"Dosage": entry.Dosage,
+		"Uses": entry.Uses,
+		"Precautions": entry.Precautions,
+		"Preparations": entry.Preparations,
+	})
+}
+
+func PostEdit(c *gin.Context) {
+	num := c.Query("id")
+	id, err := strconv.ParseInt(num, 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+            "error": "Invalid value provided",
+        })
+        return
+    }
+	var form model.Herb
+	if err := c.ShouldBind(&form); err != nil {
+		c.String(http.StatusBadRequest, "Bad Request")
+		return
+	}
+	model.New().Update(id, form.Name, form.Dosage, form.Uses, form.Precautions, form.Preparations)
+	c.Redirect(http.StatusSeeOther, "/")
 }

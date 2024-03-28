@@ -124,3 +124,10 @@ func (m *Model) SelectById(id int64) Herb {
 	}
 	return herb
 }
+
+func (m *Model) Update(id int64, name string, dosage string, uses string, precautions string, preparations string) {
+	_, err := m.connection.Exec("UPDATE herbs SET name = ?, dosage = ?, uses = ?, precautions = ?, preparations = ? WHERE id = ?", name, dosage, uses, precautions, preparations, id)
+	if err != nil {
+		log.Println("Error updating entry:", err)
+	}
+}
