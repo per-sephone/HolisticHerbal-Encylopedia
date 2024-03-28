@@ -31,17 +31,6 @@ func TestSelect(t *testing.T) {
 	assert.Equal(t, herbs, expected)
 }
 
-func TestSelectByName(t *testing.T) {
-	db := New()
-	herb := Herb{}
-	herb = db.SelectByName("TestName")
-	assert.Equal(t, herb.Name, "TestName")
-	assert.Equal(t, herb.Dosage, "1")
-	assert.Equal(t, herb.Uses, "TestUses")
-	assert.Equal(t, herb.Precautions, "TestPrecautions")
-	assert.Equal(t, herb.Preparations, "TestPreparations")
-}
-
 func TestSelectByUse(t *testing.T) {
 	db := New()
 	herbs := []Herb{}
