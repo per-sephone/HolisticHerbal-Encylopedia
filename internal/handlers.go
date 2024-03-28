@@ -41,9 +41,23 @@ func Search(c *gin.Context) {
 }
 
 func SearchByName(c *gin.Context) {
-
+	name := c.Query("name")
+	entries := model.New().SelectByName(name) 
+    c.HTML(http.StatusOK, "nameSearch.html", gin.H{
+		"Index": "/",
+		"Entries": entries,
+	})
 }
 
 func SearchByUse(c *gin.Context) {
+	use := c.Query("use")
+	entries := model.New().SelectByUse(use) 
+    c.HTML(http.StatusOK, "nameSearch.html", gin.H{
+		"Index": "/",
+		"Entries": entries,
+	})
+}
 
+func Edit(c *gin.Context) {
+	
 }

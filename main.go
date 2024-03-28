@@ -14,7 +14,7 @@ func main() {
 	router.POST("/create", internal.PostCreate)
 	router.GET("/create", internal.GetCreate)
 	router.GET("/search", internal.Search)
-	router.GET("/nameSearch/:name", internal.SearchByName)
-	router.GET("/useSearch/:use", internal.SearchByUse)
-	router.Run(":8080")
+	router.GET("/nameSearch", internal.SearchByName)
+	router.GET("/useSearch", internal.SearchByUse)
+	router.Run(":8001")
 }

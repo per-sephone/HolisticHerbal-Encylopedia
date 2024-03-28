@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Holistic Herbal Encyclopedia</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles.css">
+</head>
+<body>
+<h2>Holistic Herbal Encyclopedia</h2>
+
+<a href="{{ .Index }}">Back to Home</a>
+
+<h2>Use Search Results</h2>
+
+<form> 
+    {{ range .Entries }}
+    <p class="entry">
+        [ {{ .Id }} ]
+        Name: {{ .Name }}<br>
+        Dosage: {{ .Dosage }}<br>
+        Uses: {{ .Uses }} <br>
+        Precautions: {{ .Precautions }}<br>
+        Preparations: {{ .Preparations }}<br>
+    </p>
+    {{ end }}
+ </form>
+ </body>
+</html>
